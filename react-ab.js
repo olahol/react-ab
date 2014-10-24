@@ -96,7 +96,7 @@
       return ;
     }
 
-    window.ReactABExperiment = exports.Experiment;
-    window.ReactABVariant = exports.Variant;
+    window.React.addons.Experiment = exports.Experiment;
+    window.React.addons.Variant = exports.Variant;
 	}
 }());

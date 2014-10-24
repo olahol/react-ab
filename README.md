@@ -37,7 +37,7 @@ var App = React.createClass({
 
 ## Components
 
-### exports.Experiment or window.ReactABExperiment
+### exports.Experiment or window.React.addons.Experiment
 
 An A/B experiment. Required attributes `name`, `onChoice`
 and `children`. `childern` has to be an array of Variant
@@ -48,6 +48,6 @@ with name "react_ab_{experiment name}" and path "/".
 
 * * *
 
-### exports.Variant or window.ReactABVariant
+### exports.Variant or window.React.addons.Variant
 
 A variant in an A/B experiment. Required attributes `name` and `children`.
