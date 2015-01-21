@@ -10,7 +10,7 @@
   "use strict";
 
   if (typeof document === "undefined" || typeof window === "undefined") {
-    throw new Error("react-social uses jsonp and requires a browser environment");
+    throw new Error("react-ab uses cookies and requires a browser environment");
   }
 
   var exports = {};
