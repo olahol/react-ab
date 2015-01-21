@@ -1,0 +1,36 @@
+{
+  "name": "react-ab",
+  "version": "0.1.0",
+  "description": "",
+  "main": "react-ab.js",
+  "dependencies": {
+    "react": "^0.12.2"
+  },
+  "devDependencies": {
+    "beefy": "~2.1.1"
+    , "browserify": "~8.1.1"
+  },
+  "scripts": {
+    "dev": "beefy dev.js --live"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/olahol/react-ab"
+  },
+  "keywords": [
+    "react",
+    "ab",
+    "testing",
+    "component",
+    "javascript",
+    "react-component"
+  ],
+  "author": "Ola Holmström",
+  "contributors": [
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/olahol/react-ab/issues"
+  },
+  "homepage": "https://github.com/olahol/react-ab"
+}

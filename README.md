@@ -1,34 +1,45 @@
 # react-ab
 
-Simple A/B testing component for React.
+Simple A/B testing component for React. Chooses one variant at random, saves
+that choice in a cookie and fires a callback.
+
+## Install
+
+```bash
+npm install react-ab --save
+```
 
 ## Example
 
-An example using
-[analytics.js](https://developers.google.com/analytics/devguides/collection/analyticsjs/)
-from Google analytics.
+An example using [Mixpanel](https://mixpanel.com/).
 
 ```js
-var choice = function (experiment, variant, index) {
-  ga("set", experiment, variant);
-};
-
 var App = React.createClass({
-  render: function () {
-    var click = function (e) {
-      ga("send", "event", "click", "button");
-    };
+  choice: function (experiment, variant, index) {
+    mixpanel.register({
+        "title": variant
+    });
+  }
 
+  , click: function (e) {
+    mixpanel.track("click");
+  }
+
+  , render: function () {
     return (
       <div>
-        <Experiment onChoice={choice} name="signup">
-          <Variant name="red">
-            <button onClick={click} style={{backgroundColor: "red"}}>Signup</button>
+        <Experiment onChoice={this.choice} name="tagline">
+          <Variant name="normal">
+            <h1> A A/B testing component for React </h1>
           </Variant>
-          <Variant name="blue">
-            <button onClick={click} style={{backgroundColor: "blue"}}>Signup</button>
+          <Variant name="enterprise">
+            <h1> A vertically integrated React component </h1>
+          </Variant>
+          <Variant name="lies">
+            <h1> One weird React component that will increase your metrics by 100%! </h1>
           </Variant>
         </Experiment>
+        <a onClick={this.click} href="//github.com/olahol/react-ab">React AB component</a>
       </div>
     );
   }
@@ -37,7 +48,7 @@ var App = React.createClass({
 
 ## Components
 
-### exports.Experiment or window.React.addons.Experiment
+### Experiment or window.ReactAB.Experiment
 
 An A/B experiment. Required attributes `name`, `onChoice`
 and `children`. `childern` has to be an array of Variant
@@ -48,6 +59,6 @@ with name "react_ab_{experiment name}" and path "/".
 
 * * *
 
-### exports.Variant or window.React.addons.Variant
+### Variant or window.ReactAB.Variant
 
 A variant in an A/B experiment. Required attributes `name` and `children`.
