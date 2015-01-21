@@ -39,10 +39,11 @@
   exports.Variant = React.createClass({
     propTypes: {
       name: React.PropTypes.string.isRequired
+      , children: React.PropTypes.node.isRequired
     }
 
     , render: function () {
-      return React.createElement("span", null, this.props.children);
+      return this.props.children;
     }
   });
 
@@ -53,15 +54,6 @@
       name: React.PropTypes.string.isRequired
       , children: React.PropTypes.array.isRequired
       , onChoice: React.PropTypes.func.isRequired
-    }
-
-    , chooseVariant: function () {
-      var index = Math.floor(Math.random() * this.props.children.length)
-        , variant = this.props.children[index].props.name;
-
-      cookie.set("react_ab_" + this.props.name, variant, "/");
-
-      return index;
     }
 
     , componentWillMount: function () {
@@ -85,15 +77,32 @@
     }
 
     , componentDidMount: function () {
+      this.props.onChoice(this.props.name, this.getVariant(), this.index);
+    }
+
+    , chooseVariant: function () {
+      var index = Math.floor(Math.random() * this.props.children.length)
+        , variant = this.props.children[index].props.name;
+
+      cookie.set("react_ab_" + this.props.name, variant, "/");
+
+      return index;
+    }
+
+    , getVariant: function () {
+      if (this.index === null) { return ; }
+
       var child = this.props.children[this.index]
         , variant = child.props.name;
-      this.props.onChoice(this.props.name, variant, this.index);
+
+      return variant;
     }
 
     , render: function () {
       var child = this.props.children[this.index];
 
-      return React.createElement("span", null, child.props.children);
+      //return React.createElement("span", null, child.props.children);
+      return child;
     }
   });
 

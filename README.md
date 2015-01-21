@@ -17,7 +17,7 @@ An example using [Mixpanel](https://mixpanel.com/).
 var App = React.createClass({
   choice: function (experiment, variant, index) {
     mixpanel.register({
-        "title": variant
+      "tagline": variant
     });
   }
 
@@ -46,19 +46,36 @@ var App = React.createClass({
 });
 ```
 
-## Components
+## Experiment API
 
-### Experiment or window.ReactAB.Experiment
+### Props
 
-An A/B experiment. Required attributes `name`, `onChoice`
-and `children`. `childern` has to be an array of Variant
-components. `onChoice` is called when a variant is chosen with arguments
-`experiment name`, `variant name` and `variant index`.  The state of the
-experiment (that is the variant that was chosen) is saved in a cookie
-with name "react_ab_{experiment name}" and path "/".
+##### name (required)
 
-* * *
+Name of what you are testing, something descriptive like title or color.
 
-### Variant or window.ReactAB.Variant
+##### onChoice(experiment, variant, index) (required)
 
-A variant in an A/B experiment. Required attributes `name` and `children`.
+Callback that fires when the chosen variant is mounted. You want to use
+this to setup tracking variables.
+
+### Methods
+
+##### getVariant()
+
+Returns the name of the chosen variant.
+
+## Variant API
+
+### Props
+
+##### name (required)
+
+Name of the attribute you are testing, if you are for example running
+and experiment testing which color leads to the most conversion this
+prop should be something like red, blue or green indicating what color
+you are testing.
+
+---
+
+MIT Licensed
