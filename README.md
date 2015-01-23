@@ -130,11 +130,11 @@ usually from a cookie.
 ##### random
 
 Random function, should return a number in the range [0, 1). The default uses
-`crypto.getRandomValues()` when available and falls back to `Math.random`.
+`crypto.getRandomValues()` when available and falls back on `Math.random`.
 
 ##### get, set and del
 
-Get, set and delete stored experiments. Default these functions use browser
+Get, set and delete stored experiments. By default these functions use browser
 cookies. When rendering server side these should be changed appropriately.
 
 #### Methods
