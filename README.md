@@ -8,7 +8,9 @@
 
 > Simple and Isopmorphic A/B testing component for [React](http://facebook.github.io/react/index.html).
 
-[![A/B Testing Demo](https://cdn.rawgit.com/olahol/react-ab/master/example/demo.gif "A/B Testing Demo")](http://olahol.github.io/react-ab)
+### [Demo](https://olahol.github.io/react-ab/example)
+
+[![A/B Testing Demo](https://cdn.rawgit.com/olahol/react-ab/master/example/demo.gif "A/B Testing Demo")](http://olahol.github.io/react-ab/example)
 
 ## Install
 
