@@ -107,7 +107,6 @@ var Experiment = ReactAB.Experiment
 
 var App = React.createClass({
   clear: function () {
-    console.log(this.refs.exButton);
     this.refs.exButton.clearCookie();
     window.location.reload();
   }
