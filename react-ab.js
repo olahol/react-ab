@@ -11,7 +11,7 @@
 
   var exports = {};
 
-  var rand = function () {
+  var random = function () {
     try {
       var arr = new Uint16Array(1);
       window.crypto.getRandomValues(arr);
@@ -75,6 +75,7 @@
         get: cookie.get
         , set: cookie.set
         , del: cookie.del
+        , random: random
       };
     }
 
@@ -105,7 +106,7 @@
     }
 
     , chooseVariant: function (fire) {
-      var index = Math.floor(rand() * this.props.children.length)
+      var index = Math.floor(this.props.random() * this.props.children.length)
         , variant = this.props.children[index].props.name;
 
       this.props.set(this.cookieName(), variant);

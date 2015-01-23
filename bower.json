@@ -1,0 +1,32 @@
+{
+  "name": "react-ab",
+  "main": [
+    "react-ab.js",
+  ],
+  "version": "0.3.0",
+  "homepage": "https://github.com/olahol/react-ab",
+  "description": "Simple A/B testing component for React.",
+  "keywords": [
+    "react",
+    "ab",
+    "testing",
+    "component",
+    "javascript",
+    "react-component"
+  ],
+  "authors": [
+    "Ola Holmström",
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "example"
+  ],
+  "dependencies": {
+    "react": "~0.12.2"
+  }
+}

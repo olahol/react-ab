@@ -1,7 +1,7 @@
 {
   "name": "react-ab",
   "version": "0.3.0",
-  "description": "Simple A/B testing component for React. Chooses one variant at random, saves that choice in a cookie and fires a callback.",
+  "description": "Simple A/B testing component for React.",
   "main": "react-ab.js",
   "dependencies": {
     "react": "^0.12.2"
