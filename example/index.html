@@ -101,7 +101,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.12.2/JSXTransformer.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react-with-addons.js"></script>
     <script src="https://cdn.rawgit.com/olahol/react-ab/master/react-ab.js"></script>
-<script type="text/jsx">
+<script id="source" type="text/jsx">
 var Experiment = ReactAB.Experiment
   , Variant = ReactAB.Variant;
 
@@ -122,6 +122,8 @@ var App = React.createClass({
   }
 
   , render: function () {
+    var src = document.getElementById("source").textContent;
+
     var variants = ["default","primary","success","info","warning","danger","link"].map(function (variant) {
       return (
         <Variant key={variant} name={variant}>
@@ -157,6 +159,10 @@ var App = React.createClass({
             </Experiment>
           </p>
         </div>
+        <h2> Source code </h2>
+        <pre>
+          {src}
+        </pre>
       </div>
     );
   }
