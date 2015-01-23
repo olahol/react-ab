@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Narrow Jumbotron Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+    body {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+
+    /* Everything but the jumbotron gets side spacing for mobile first views */
+    .header,
+    .marketing,
+    .footer {
+      padding-right: 15px;
+      padding-left: 15px;
+    }
+
+    /* Custom page header */
+    .header {
+      border-bottom: 1px solid #e5e5e5;
+    }
+    /* Make the masthead heading the same height as the navigation */
+    .header h3 {
+      padding-bottom: 19px;
+      margin-top: 0;
+      margin-bottom: 0;
+      line-height: 40px;
+    }
+
+    /* Custom page footer */
+    .footer {
+      padding-top: 19px;
+      color: #777;
+      border-top: 1px solid #e5e5e5;
+    }
+
+    /* Customize container */
+    @media (min-width: 768px) {
+      .container {
+        max-width: 730px;
+      }
+    }
+    .container-narrow > hr {
+      margin: 30px 0;
+    }
+
+    /* Main marketing message and sign up button */
+    .jumbotron {
+      text-align: center;
+      border-bottom: 1px solid #e5e5e5;
+    }
+    .jumbotron .btn {
+      padding: 14px 24px;
+      font-size: 21px;
+    }
+
+    /* Supporting marketing content */
+    .marketing {
+      margin: 40px 0;
+    }
+    .marketing p + h4 {
+      margin-top: 28px;
+    }
+
+    /* Responsive: Portrait tablets and up */
+    @media screen and (min-width: 768px) {
+      /* Remove the padding we set earlier */
+      .header,
+      .marketing,
+      .footer {
+        padding-right: 0;
+        padding-left: 0;
+      }
+      /* Space out the masthead */
+      .header {
+        margin-bottom: 30px;
+      }
+      /* Remove the bottom border on the jumbotron for visual effect */
+      .jumbotron {
+        border-bottom: 0;
+      }
+    }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.12.2/JSXTransformer.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.12.2/react-with-addons.js"></script>
+    <script src="https://cdn.rawgit.com/olahol/react-ab/master/react-ab.js"></script>
+<script type="text/jsx">
+var Experiment = ReactAB.Experiment
+  , Variant = ReactAB.Variant;
+
+var App = React.createClass({
+  clear: function () {
+    console.log(this.refs.exButton);
+    this.refs.exButton.clearCookie();
+    window.location.reload();
+  }
+
+  , choose: function () {
+    this.refs.exButton.chooseVariant();
+  }
+
+  , choice: function (experiment, variant) {
+    // this is where you want to setup tracking variables.
+    console.log(experiment, variant);
+  }
+
+  , render: function () {
+    var variants = ["default","primary","success","info","warning","danger","link"].map(function (variant) {
+      return (
+        <Variant key={variant} name={variant}>
+          <a className={"btn btn-lg btn-" + variant} href="https://github.com/olahol/react-ab" role="button">
+            <span className="glyphicon glyphicon-star" />
+            Star this repository on Github!
+          </a>
+        </Variant>
+      );
+    });
+
+    return (
+      <div className="container">
+        <div className="header">
+          <nav>
+            <ul className="nav nav-pills pull-right">
+              <li role="presentation"><a onClick={this.clear} href="#">Clear cookie and reload page</a></li>
+              <li role="presentation"><a onClick={this.choose} href="#">Choose new variant</a></li>
+            </ul>
+          </nav>
+          <h3 className="text-muted">Demonstration</h3>
+        </div>
+        <div className="jumbotron">
+          <h1>React A/B</h1>
+          <p className="lead">
+            Simple and clean split testing for your
+            React components. It's isomorphic so it works as well on the
+            client as on the server!
+          </p>
+          <p>
+            <Experiment ref="exButton" name="button" onChoice={this.choice}>
+              {variants}
+            </Experiment>
+          </p>
+        </div>
+      </div>
+    );
+  }
+});
+
+window.onload = function () {
+  React.render(<App />, document.body);
+};
+
+</script>
+  </head>
+  <body />
+</html>
