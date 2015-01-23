@@ -9,11 +9,17 @@
 })(this, function (React) {
   "use strict";
 
-  if (typeof document === "undefined" || typeof window === "undefined") {
-    throw new Error("react-ab uses cookies and requires a browser environment");
-  }
-
   var exports = {};
+
+  var rand = function () {
+    try {
+      var arr = new Uint16Array(1);
+      window.crypto.getRandomValues(arr);
+      return arr[0] / 65536;
+    } catch(e) {
+      return Math.random();
+    }
+  };
 
   var cookie = {
     get: function (name) {
@@ -31,8 +37,24 @@
       }
       return null;
     }
-    , set: function (name, value, path) {
-      document.cookie = name + "=" + encodeURIComponent(value) + "; path=" + encodeURI(path);
+
+    , set: function (name, value, seconds) {
+      var key = name + "=" + encodeURIComponent(value)
+        , expires = ""
+        , path = "path=/"
+        , date = null;
+
+      if (typeof seconds !== "undefined") {
+        date = new Date();
+        date.setTime(date.getTime()+(seconds*1000));
+        expires = "expires=" + date.toGMTString();
+      }
+
+      document.cookie = [key, expires, path].join(";");
+    }
+
+    , del: function (name) {
+      this.set(name, "", -1);
     }
   };
 
@@ -48,7 +70,19 @@
   });
 
   exports.Experiment = React.createClass({
-    index: null
+    getDefaultProps: function () {
+      return {
+        get: cookie.get
+        , set: cookie.set
+        , del: cookie.del
+      };
+    }
+
+    , getInitialState: function () {
+      return {
+        index: null
+      };
+    }
 
     , propTypes: {
       name: React.PropTypes.string.isRequired
@@ -57,51 +91,49 @@
     }
 
     , componentWillMount: function () {
-      var variant = cookie.get("react_ab_" + this.props.name);
-
-      if (variant === null) {
-        this.index = this.chooseVariant();
-        return ;
-      }
+      var variant = this.props.get(this.cookieName());
 
       for (var i = 0; i < this.props.children.length; i += 1) {
         if (variant === this.props.children[i].props.name) {
-          this.index = i;
-          break;
+          this.setState({ index: i });
+          this.props.onChoice(this.props.name, this.props.children[i].props.name, i, true);
+          return ;
         }
       }
 
-      if (this.index === null) {
-        this.index = this.chooseVariant();
-      }
+      this.chooseVariant();
     }
 
-    , componentDidMount: function () {
-      this.props.onChoice(this.props.name, this.getVariant(), this.index);
-    }
-
-    , chooseVariant: function () {
-      var index = Math.floor(Math.random() * this.props.children.length)
+    , chooseVariant: function (fire) {
+      var index = Math.floor(rand() * this.props.children.length)
         , variant = this.props.children[index].props.name;
 
-      cookie.set("react_ab_" + this.props.name, variant, "/");
+      this.props.set(this.cookieName(), variant);
+
+      this.setState({ index: index });
+      this.props.onChoice(this.props.name, variant, index, false);
 
       return index;
     }
 
     , getVariant: function () {
-      if (this.index === null) { return ; }
-
-      var child = this.props.children[this.index]
+      var child = this.props.children[this.state.index]
         , variant = child.props.name;
 
       return variant;
     }
 
-    , render: function () {
-      var child = this.props.children[this.index];
+    , cookieName: function () {
+      return "react_ab_" + this.props.name;
+    }
 
-      //return React.createElement("span", null, child.props.children);
+    , clearCookie: function () {
+      this.props.del(this.cookieName());
+    }
+
+    , render: function () {
+      var child = this.props.children[this.state.index];
+
       return child;
     }
   });

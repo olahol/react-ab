@@ -3,5 +3,5 @@ components
 node_modules
 bower_components
 *.log
-*.swp
+coverage
 dev.js
