@@ -1,7 +1,7 @@
 {
   "name": "react-ab",
   "main": [
-    "react-ab.js",
+    "react-ab.js"
   ],
   "version": "0.3.0",
   "homepage": "https://github.com/olahol/react-ab",
@@ -15,7 +15,7 @@
     "react-component"
   ],
   "authors": [
-    "Ola Holmström",
+    "Ola Holmström"
   ],
   "license": "MIT",
   "ignore": [
