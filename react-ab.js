@@ -66,7 +66,11 @@
     }
 
     , render: function () {
-      return this.props.children;
+      if (React.Children.count(this.props.children) === 1) {
+        return this.props.children;
+      }
+
+      return React.createElement("span", null, this.props.children);
     }
   });
 

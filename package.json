@@ -1,6 +1,6 @@
 {
   "name": "react-ab",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Simple isopmorphic A/B testing component for React.",
   "main": "react-ab.js",
   "dependencies": {
