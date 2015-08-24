@@ -139,7 +139,7 @@
 
       if (selectedChildrenIndex > 0) {
         this.index = selectedChildrenIndex;
-        this.props.onChoice(this.props.name, this.props.children[selectedChildrenIndex].props.name, i, true);
+        this.props.onChoice(this.props.name, this.props.children[selectedChildrenIndex].props.name, selectedChildrenIndex, true);
         this.chooseVariant();
       }
     }
