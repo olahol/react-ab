@@ -150,7 +150,7 @@
 
       this.set()(this.cookieName(), variant);
 
-      this.setState({ index: index });
+      this.index = index;
       this.props.onChoice(this.props.name, variant, index, false);
 
       return index;
