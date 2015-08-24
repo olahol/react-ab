@@ -90,14 +90,19 @@ describe("Experiment", function () {
     assert.equal(variant4, variant5);
 
     assert.equal(ex4.getVariant(), ex5.getVariant());
+
+    done();
+
   });
 
-  it("should work when variants have multiple children", function () {
+  it("should work when variants have multiple children", function (done) {
     var variant1 = React.createElement(Variant, { name: "one" }, React.createElement("span", null, ""), React.createElement("span", null, ""));
     var variant2 = React.createElement(Variant, { name: "two" }, React.createElement("span", null, ""), React.createElement("span", null, ""));
     var ex = TestUtils.renderIntoDocument(React.createElement(Experiment, { name: "test", onChoice: function () { }}, variant1, variant2));
 
     assert.ok(ex);
+
+    done();
   });
 
   it("should work universal", function () {

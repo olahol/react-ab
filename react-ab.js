@@ -10,6 +10,8 @@
 })(this, function (React) {
   "use strict";
 
+  var findIndex = require('lodash.findIndex');
+
   var exports = {};
 
   var random = function () {
@@ -75,7 +77,8 @@
   });
 
   exports.Experiment = React.createClass({
-    getInitialState: function () {
+    index: 0,
+	getInitialState: function () {
       return {
         index: null
       };
@@ -128,6 +131,19 @@
       this.chooseVariant();
     }
 
+	, componentDidMount: function() {
+      var variant = this.props.get(this.cookieName());
+      var selectedChildrenIndex = findIndex(this.props.children, function(c) {
+        return c.props.name === variant;
+      });
+
+      if (selectedChildrenIndex > 0) {
+        this.index = selectedChildrenIndex;
+        this.props.onChoice(this.props.name, this.props.children[selectedChildrenIndex].props.name, i, true);
+        this.chooseVariant();
+      }
+    }
+
     , chooseVariant: function (fire) {
       var index = Math.floor(this.random()() * this.props.children.length)
         , variant = this.props.children[index].props.name;
@@ -141,7 +157,7 @@
     }
 
     , getVariant: function () {
-      var child = this.props.children[this.state.index]
+      var child = this.props.children[this.index]
         , variant = child.props.name;
 
       return variant;
@@ -156,7 +172,7 @@
     }
 
     , render: function () {
-      var child = this.props.children[this.state.index];
+      var child = this.props.children[this.index];
 
       return child;
     }

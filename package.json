@@ -4,21 +4,22 @@
   "description": "Simple declarative and universal A/B testing component for React.",
   "main": "react-ab.js",
   "dependencies": {
+    "lodash.findindex": "^3.2.1",
     "react": "^0.13.0"
   },
   "devDependencies": {
-    "beefy": "~2.1.1"
-    , "browserify": "~8.1.1"
-    , "jsdom": "^3.0.2"
-    , "coveralls": "^2.11.2"
-    , "mocha": "^2.1.0"
-    , "istanbul": "^0.3.5"
-    , "get-random-values": "^1.1.1"
+    "beefy": "~2.1.1",
+    "browserify": "~8.1.1",
+    "jsdom": "^3.0.2",
+    "coveralls": "^2.11.2",
+    "mocha": "^2.1.0",
+    "istanbul": "^0.3.5",
+    "get-random-values": "^1.1.1"
   },
   "scripts": {
-    "dev": "beefy dev.js --live"
-    , "test": "./node_modules/.bin/mocha"
-    , "coverage": "./node_modules/istanbul/lib/cli.js cover --print detail ./node_modules/mocha/bin/_mocha -- --ui bdd -R spec"
+    "dev": "beefy dev.js --live",
+    "test": "mocha",
+    "coverage": "./node_modules/istanbul/lib/cli.js cover --print detail ./node_modules/mocha/bin/_mocha -- --ui bdd -R spec"
   },
   "repository": {
     "type": "git",
@@ -33,8 +34,7 @@
     "react-component"
   ],
   "author": "Ola Holmström",
-  "contributors": [
-  ],
+  "contributors": [],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/olahol/react-ab/issues"
