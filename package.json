@@ -1,6 +1,6 @@
 {
   "name": "react-ab",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Simple isopmorphic A/B testing component for React.",
   "main": "react-ab.js",
   "dependencies": {
@@ -17,7 +17,7 @@
   },
   "scripts": {
     "dev": "beefy dev.js --live"
-    , "test": "mocha"
+    , "test": "./node_modules/.bin/mocha"
     , "coverage": "./node_modules/istanbul/lib/cli.js cover --print detail ./node_modules/mocha/bin/_mocha -- --ui bdd -R spec"
   },
   "repository": {

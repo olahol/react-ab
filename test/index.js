@@ -99,4 +99,51 @@ describe("Experiment", function () {
 
     assert.ok(ex);
   });
+
+  it("should work with isomorphic", function () {
+    var variant1 = React.createElement(Variant, { name: "one" }, React.createElement("span", null, "one"));
+    var variant2 = React.createElement(Variant, { name: "two" }, React.createElement("span", null, "two"));
+    var cookie = {};
+    var html = React.renderToString(React.createElement(Experiment, {
+      name: "test"
+      , get: function (x) { return cookie[x]; }
+      , set: function (x, y) { cookie[x] = y; }
+      , clear: function (x) { delete cookie[x] }
+      , onChoice: function () { }
+    }, variant1, variant2));
+
+    assert.ok(/(one|two)/.test(html), "one or two should be in html");
+    assert.equal(Object.keys(cookie).length, 1, "there should be one key");
+  });
+
+  it("should work with isomorphic context", function () {
+    var cookie = {};
+
+    var App = React.createClass({
+      childContextTypes: {
+        getExperiment: React.PropTypes.func
+        , setExperiment: React.PropTypes.func
+        , clearExperiment: React.PropTypes.func
+      }
+
+      , getChildContext: function () {
+        return {
+          getExperiment: function (x) { return cookie[x]; }
+          , setExperiment: function (x, y) { cookie[x] = y; }
+          , clearExperiment: function (x) { delete cookie[x] }
+        };
+      }
+
+      , render: function () {
+        var variant1 = React.createElement(Variant, { name: "one" }, React.createElement("span", null, "one"));
+        var variant2 = React.createElement(Variant, { name: "two" }, React.createElement("span", null, "two"));
+
+        return React.createElement(Experiment, { name: "test" , onChoice: function () { } }, variant1, variant2);
+      }
+    });
+
+    var html = React.renderToString(React.createElement(App));
+    assert.ok(/(one|two)/.test(html), "one or two should be in html");
+    assert.equal(Object.keys(cookie).length, 1, "there should be one key");
+  });
 });

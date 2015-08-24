@@ -22,7 +22,7 @@
     }
   };
 
-  var cookie = {
+  var browserCookie = {
     get: function (name) {
       var eq = name + "="
         , ca = document.cookie.split(";")
@@ -54,8 +54,8 @@
       document.cookie = [key, expires, path].join(";");
     }
 
-    , del: function (name) {
-      this.set(name, "", -1);
+    , clear: function (name) {
+      browserCookie.set(name, "", -1);
     }
   };
 
@@ -75,16 +75,7 @@
   });
 
   exports.Experiment = React.createClass({
-    getDefaultProps: function () {
-      return {
-        get: cookie.get
-        , set: cookie.set
-        , del: cookie.del
-        , random: random
-      };
-    }
-
-    , getInitialState: function () {
+    getInitialState: function () {
       return {
         index: null
       };
@@ -94,10 +85,37 @@
       name: React.PropTypes.string.isRequired
       , children: React.PropTypes.array.isRequired
       , onChoice: React.PropTypes.func.isRequired
+      , random: React.PropTypes.func
+      , get: React.PropTypes.func
+      , set: React.PropTypes.func
+      , clear: React.PropTypes.func
+    }
+
+    , contextTypes: {
+      randomExperiment: React.PropTypes.func
+      , getExperiment: React.PropTypes.func
+      , setExperiment: React.PropTypes.func
+      , clearExperiment: React.PropTypes.func
+    }
+
+    , random: function () {
+      return this.props.random || this.context.randomExperiment || random;
+    }
+
+    , get: function () {
+      return this.props.get || this.context.getExperiment || browserCookie.get;
+    }
+
+    , set: function () {
+      return this.props.set || this.context.setExperiment || browserCookie.set;
+    }
+
+    , clear: function () {
+      return this.props.clear || this.context.clearExperiment || browserCookie.clear;
     }
 
     , componentWillMount: function () {
-      var variant = this.props.get(this.cookieName());
+      var variant = this.get()(this.cookieName());
 
       for (var i = 0; i < this.props.children.length; i += 1) {
         if (variant === this.props.children[i].props.name) {
@@ -111,10 +129,10 @@
     }
 
     , chooseVariant: function (fire) {
-      var index = Math.floor(this.props.random() * this.props.children.length)
+      var index = Math.floor(this.random()() * this.props.children.length)
         , variant = this.props.children[index].props.name;
 
-      this.props.set(this.cookieName(), variant);
+      this.set()(this.cookieName(), variant);
 
       this.setState({ index: index });
       this.props.onChoice(this.props.name, variant, index, false);
@@ -134,7 +152,7 @@
     }
 
     , clearCookie: function () {
-      this.props.del(this.cookieName());
+      this.clear()(this.cookieName());
     }
 
     , render: function () {
