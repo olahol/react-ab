@@ -109,7 +109,8 @@ var App = React.createClass({
 });
 ```
 
-Server side with Express.js and using ES6:
+Universality is achieved by setting `get, set, clear`. Here is an example
+server side with Express.js and using ES6:
 
 ```js
 import express from "express";

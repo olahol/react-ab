@@ -100,7 +100,7 @@ describe("Experiment", function () {
     assert.ok(ex);
   });
 
-  it("should work with isomorphic", function () {
+  it("should work universal", function () {
     var variant1 = React.createElement(Variant, { name: "one" }, React.createElement("span", null, "one"));
     var variant2 = React.createElement(Variant, { name: "two" }, React.createElement("span", null, "two"));
     var cookie = {};
@@ -116,7 +116,7 @@ describe("Experiment", function () {
     assert.equal(Object.keys(cookie).length, 1, "there should be one key");
   });
 
-  it("should work with isomorphic context", function () {
+  it("should work with universal context", function () {
     var cookie = {};
 
     var App = React.createClass({

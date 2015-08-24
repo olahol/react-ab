@@ -5,7 +5,7 @@
   ],
   "version": "0.4.0",
   "homepage": "https://github.com/olahol/react-ab",
-  "description": "Simple isopmorphic A/B testing component for React.",
+  "description": "Simple declarative and universal A/B testing component for React.",
   "keywords": [
     "react",
     "ab",
