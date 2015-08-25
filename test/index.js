@@ -154,4 +154,14 @@ describe("Experiment", function () {
 
     assert.ok(ex);
   });
+
+  it("should test choose variant", function () {
+    var variant1 = React.createElement(Variant, { name: "one" }, "one");
+    var variant2 = React.createElement(Variant, { name: "two" }, "two");
+    var ex = TestUtils.renderIntoDocument(React.createElement(Experiment, { name: "test", onChoice: function () { }}, variant1, variant2));
+
+    ex.chooseVariant();
+
+    assert.ok(ex);
+  });
 });
