@@ -1,3 +1,7 @@
+### 0.4.1 (2015-08-25)
+
+* Fix text node bug.
+
 ### 0.4.0 (2015-08-24)
 
 * Add context passing of props for convenience.

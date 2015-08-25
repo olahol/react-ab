@@ -146,4 +146,12 @@ describe("Experiment", function () {
     assert.ok(/(one|two)/.test(html), "one or two should be in html");
     assert.equal(Object.keys(cookie).length, 1, "there should be one key");
   });
+
+  it("should work with text nodes", function () {
+    var variant1 = React.createElement(Variant, { name: "one" }, "one");
+    var variant2 = React.createElement(Variant, { name: "two" }, "two");
+    var ex = TestUtils.renderIntoDocument(React.createElement(Experiment, { name: "test", onChoice: function () { }}, variant1, variant2));
+
+    assert.ok(ex);
+  });
 });

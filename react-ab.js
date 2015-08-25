@@ -66,7 +66,7 @@
     }
 
     , render: function () {
-      if (React.Children.count(this.props.children) === 1) {
+      if (React.Children.count(this.props.children) === 1 && React.isValidElement(this.props.children)) {
         return this.props.children;
       }
 

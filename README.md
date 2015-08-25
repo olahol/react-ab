@@ -6,7 +6,7 @@
 [![Dependency Status](https://david-dm.org/olahol/react-ab.svg)](https://david-dm.org/olahol/react-ab)
 [![Download Count](https://img.shields.io/npm/dm/react-ab.svg?style=flat)](https://www.npmjs.com/package/react-ab)
 
-> Simple isopmorphic A/B testing component for [React](http://facebook.github.io/react/index.html).
+> Simple declarative and universal A/B testing component for React.
 
 ### [Demo](https://olahol.github.io/react-ab/example)
 
@@ -119,8 +119,6 @@ import cookieParser from "cookie-parser";
 import React from "react/addons";
 import { Experiment, Variant } from "react-ab";
 
-var cookie = {};
-
 var App = React.createClass({
   choice: function (experiment, variant, index) {
     console.log(experiment, variant, index);
@@ -185,15 +183,18 @@ Random function, should return a number in the range [0, 1). The default uses
 
 ##### get
 
-A function that takes an `experiment` and returns a `variant`.
+A function that takes an `experiment` and returns a `variant`. By
+default uses browser cookies.
 
 ##### set
 
-A function that takes an `experiment` and `variant` and stores it.
+A function that takes an `experiment` and `variant` and stores it. By
+default uses browser cookies.
 
 ##### clear
 
-A function that clears/unsets an `experiment`.
+A function that clears/unsets an `experiment`. By
+default uses browser cookies.
 
 #### Context
 
