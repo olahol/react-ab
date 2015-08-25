@@ -7,7 +7,8 @@
     "react": "^0.13.0"
   },
   "devDependencies": {
-    "beefy": "~2.1.1"
+    "react": "^0.13.0"
+    , "beefy": "~2.1.1"
     , "browserify": "~8.1.1"
     , "jsdom": "^3.0.2"
     , "coveralls": "^2.11.2"
