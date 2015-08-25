@@ -10,6 +10,8 @@
 })(this, function (React) {
   "use strict";
 
+  var findIndex = require('lodash.findindex');
+
   var exports = {};
 
   var random = function () {
@@ -75,11 +77,8 @@
   });
 
   exports.Experiment = React.createClass({
-    getInitialState: function () {
-      return {
-        index: null
-      };
-    }
+    index: -1
+    , wasRetrieved: true
 
     , propTypes: {
       name: React.PropTypes.string.isRequired
@@ -114,18 +113,22 @@
       return this.props.clear || this.context.clearExperiment || browserCookie.clear;
     }
 
-    , componentWillMount: function () {
+	  , componentWillMount: function() {
       var variant = this.get()(this.cookieName());
 
-      for (var i = 0; i < this.props.children.length; i += 1) {
-        if (variant === this.props.children[i].props.name) {
-          this.setState({ index: i });
-          this.props.onChoice(this.props.name, this.props.children[i].props.name, i, true);
-          return ;
-        }
-      }
+      var selectedChildrenIndex = findIndex(this.props.children, function(c) {
+        return c.props.name === variant;
+      });
 
-      this.chooseVariant();
+      if (selectedChildrenIndex >= 0) {
+        this.index = selectedChildrenIndex;
+      } else {
+        this.index = this.chooseVariant();
+      }
+    }
+
+    , componentDidMount: function() {
+      this.props.onChoice(this.props.name, this.getVariant(), this.index, this.wasRetrieved);
     }
 
     , chooseVariant: function (fire) {
@@ -134,14 +137,14 @@
 
       this.set()(this.cookieName(), variant);
 
-      this.setState({ index: index });
-      this.props.onChoice(this.props.name, variant, index, false);
+      this.index = index;
+      this.wasRetrieved = false;
 
       return index;
     }
 
     , getVariant: function () {
-      var child = this.props.children[this.state.index]
+      var child = this.props.children[this.index]
         , variant = child.props.name;
 
       return variant;
@@ -156,9 +159,7 @@
     }
 
     , render: function () {
-      var child = this.props.children[this.state.index];
-
-      return child;
+      return this.props.children[this.index];
     }
   });
 
