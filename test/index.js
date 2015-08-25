@@ -90,11 +90,69 @@ describe("Experiment", function () {
     assert.equal(variant4, variant5);
 
     assert.equal(ex4.getVariant(), ex5.getVariant());
+
   });
 
-  it("should work when variants have multiple children", function () {
+  it("should work when variants have multiple children", function (done) {
     var variant1 = React.createElement(Variant, { name: "one" }, React.createElement("span", null, ""), React.createElement("span", null, ""));
     var variant2 = React.createElement(Variant, { name: "two" }, React.createElement("span", null, ""), React.createElement("span", null, ""));
+    var ex = TestUtils.renderIntoDocument(React.createElement(Experiment, { name: "test", onChoice: function () { }}, variant1, variant2));
+
+    assert.ok(ex);
+
+    done();
+  });
+
+  it("should work universal", function () {
+    var variant1 = React.createElement(Variant, { name: "one" }, React.createElement("span", null, "one"));
+    var variant2 = React.createElement(Variant, { name: "two" }, React.createElement("span", null, "two"));
+    var cookie = {};
+    var html = React.renderToString(React.createElement(Experiment, {
+      name: "test"
+      , get: function (x) { return cookie[x]; }
+      , set: function (x, y) { cookie[x] = y; }
+      , clear: function (x) { delete cookie[x] }
+      , onChoice: function () { }
+    }, variant1, variant2));
+
+    assert.ok(/(one|two)/.test(html), "one or two should be in html");
+    assert.equal(Object.keys(cookie).length, 1, "there should be one key");
+  });
+
+  it("should work with universal context", function () {
+    var cookie = {};
+
+    var App = React.createClass({
+      childContextTypes: {
+        getExperiment: React.PropTypes.func
+        , setExperiment: React.PropTypes.func
+        , clearExperiment: React.PropTypes.func
+      }
+
+      , getChildContext: function () {
+        return {
+          getExperiment: function (x) { return cookie[x]; }
+          , setExperiment: function (x, y) { cookie[x] = y; }
+          , clearExperiment: function (x) { delete cookie[x] }
+        };
+      }
+
+      , render: function () {
+        var variant1 = React.createElement(Variant, { name: "one" }, React.createElement("span", null, "one"));
+        var variant2 = React.createElement(Variant, { name: "two" }, React.createElement("span", null, "two"));
+
+        return React.createElement(Experiment, { name: "test" , onChoice: function () { } }, variant1, variant2);
+      }
+    });
+
+    var html = React.renderToString(React.createElement(App));
+    assert.ok(/(one|two)/.test(html), "one or two should be in html");
+    assert.equal(Object.keys(cookie).length, 1, "there should be one key");
+  });
+
+  it("should work with text nodes", function () {
+    var variant1 = React.createElement(Variant, { name: "one" }, "one");
+    var variant2 = React.createElement(Variant, { name: "two" }, "two");
     var ex = TestUtils.renderIntoDocument(React.createElement(Experiment, { name: "test", onChoice: function () { }}, variant1, variant2));
 
     assert.ok(ex);

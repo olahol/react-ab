@@ -1,3 +1,12 @@
+### 0.4.1 (2015-08-25)
+
+* Fix text node bug.
+
+### 0.4.0 (2015-08-24)
+
+* Add context passing of props for convenience.
+* Rename `del` to `clear`.
+
 ### 0.3.1 (2015-01-23)
 
 * Fix bug when there are multiple children och Variant.

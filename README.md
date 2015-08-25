@@ -6,7 +6,7 @@
 [![Dependency Status](https://david-dm.org/olahol/react-ab.svg)](https://david-dm.org/olahol/react-ab)
 [![Download Count](https://img.shields.io/npm/dm/react-ab.svg?style=flat)](https://www.npmjs.com/package/react-ab)
 
-> Simple isopmorphic A/B testing component for [React](http://facebook.github.io/react/index.html).
+> Simple declarative and universal A/B testing component for React.
 
 ### [Demo](https://olahol.github.io/react-ab/example)
 
@@ -24,7 +24,7 @@ or
 bower install react-ab --save
 ```
 
-## Example
+## Examples
 
 Using [Mixpanel](https://mixpanel.com/).
 
@@ -109,6 +109,55 @@ var App = React.createClass({
 });
 ```
 
+Universality is achieved by setting `get, set, clear`. Here is an example
+server side with Express.js and using ES6:
+
+```js
+import express from "express";
+import cookieParser from "cookie-parser";
+
+import React from "react/addons";
+import { Experiment, Variant } from "react-ab";
+
+var App = React.createClass({
+  choice: function (experiment, variant, index) {
+    console.log(experiment, variant, index);
+  }
+
+  , render: function () {
+    return (
+      <div>
+        <Experiment {...this.props} onChoice={this.choice} name="tagline">
+          <Variant name="normal">
+            <h1> A A/B testing component for React </h1>
+          </Variant>
+          <Variant name="enterprise">
+            <h1> A vertically integrated React component </h1>
+          </Variant>
+          <Variant name="lies">
+            <h1> One weird React component that will increase your metrics by 100%! </h1>
+          </Variant>
+        </Experiment>
+      </div>
+    );
+  }
+});
+
+var app = express();
+
+app.use(cookieParser());
+
+app.get("/", function (req, res) {
+  res.send(React.renderToString(<App
+    get={(x) => req.cookies[x]}
+    set={(x, y) => res.cookie(x, y)}
+    clear={res.clearCookie}
+  />));
+});
+
+app.listen(3000);
+```
+
 ## API
 
 ### Experiment
@@ -132,10 +181,41 @@ usually from a cookie.
 Random function, should return a number in the range [0, 1). The default uses
 `crypto.getRandomValues()` when available and falls back on `Math.random`.
 
-##### get, set and del
+##### get
 
-Get, set and delete stored experiments. By default these functions use browser
-cookies. When rendering server side these should be changed appropriately.
+A function that takes an `experiment` and returns a `variant`. By
+default uses browser cookies.
+
+##### set
+
+A function that takes an `experiment` and `variant` and stores it. By
+default uses browser cookies.
+
+##### clear
+
+A function that clears/unsets an `experiment`. By
+default uses browser cookies.
+
+#### Context
+
+`get, set, clear, random` can also be set from `context`. If these props
+exists they overwrite `context`.
+
+##### randomExperiment
+
+`random` function taken from `context`.
+
+##### getExperiment
+
+`get` function taken from `context`.
+
+##### setExperiment
+
+`set` function taken from `context`.
+
+##### clearExperiment
+
+`clear` function taken from `context`.
 
 #### Methods
 
