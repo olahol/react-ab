@@ -77,12 +77,7 @@
   });
 
   exports.Experiment = React.createClass({
-    index: 0,
-	getInitialState: function () {
-      return {
-        index: null
-      };
-    }
+    index: -1
 
     , propTypes: {
       name: React.PropTypes.string.isRequired
@@ -117,31 +112,22 @@
       return this.props.clear || this.context.clearExperiment || browserCookie.clear;
     }
 
-    , componentWillMount: function () {
+	  , componentWillMount: function() {
       var variant = this.get()(this.cookieName());
 
-      for (var i = 0; i < this.props.children.length; i += 1) {
-        if (variant === this.props.children[i].props.name) {
-          this.setState({ index: i });
-          this.props.onChoice(this.props.name, this.props.children[i].props.name, i, true);
-          return ;
-        }
-      }
-
-      this.chooseVariant();
-    }
-
-	, componentDidMount: function() {
-      var variant = this.props.get(this.cookieName());
       var selectedChildrenIndex = findIndex(this.props.children, function(c) {
         return c.props.name === variant;
       });
 
-      if (selectedChildrenIndex > 0) {
+      if (selectedChildrenIndex >= 0) {
         this.index = selectedChildrenIndex;
-        this.props.onChoice(this.props.name, this.props.children[selectedChildrenIndex].props.name, selectedChildrenIndex, true);
-        this.chooseVariant();
+      } else {
+        this.index = this.chooseVariant();
       }
+    }
+
+    , componentDidMount: function() {
+      this.props.onChoice(this.props.name, this.getVariant(), this.index, false);
     }
 
     , chooseVariant: function (fire) {
@@ -151,7 +137,6 @@
       this.set()(this.cookieName(), variant);
 
       this.index = index;
-      this.props.onChoice(this.props.name, variant, index, false);
 
       return index;
     }
@@ -172,9 +157,7 @@
     }
 
     , render: function () {
-      var child = this.props.children[this.index];
-
-      return child;
+      return this.props.children[this.index];
     }
   });
 
