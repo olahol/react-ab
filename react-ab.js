@@ -10,7 +10,7 @@
 })(this, function (React) {
   "use strict";
 
-  var findIndex = require('lodash.findIndex');
+  var findIndex = require('lodash.findindex');
 
   var exports = {};
 
