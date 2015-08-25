@@ -91,8 +91,6 @@ describe("Experiment", function () {
 
     assert.equal(ex4.getVariant(), ex5.getVariant());
 
-    done();
-
   });
 
   it("should work when variants have multiple children", function (done) {

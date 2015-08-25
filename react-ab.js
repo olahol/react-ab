@@ -78,6 +78,7 @@
 
   exports.Experiment = React.createClass({
     index: -1
+    , wasRetrieved: true
 
     , propTypes: {
       name: React.PropTypes.string.isRequired
@@ -127,7 +128,7 @@
     }
 
     , componentDidMount: function() {
-      this.props.onChoice(this.props.name, this.getVariant(), this.index, false);
+      this.props.onChoice(this.props.name, this.getVariant(), this.index, this.wasRetrieved);
     }
 
     , chooseVariant: function (fire) {
@@ -137,6 +138,7 @@
       this.set()(this.cookieName(), variant);
 
       this.index = index;
+      this.wasRetrieved = false;
 
       return index;
     }
