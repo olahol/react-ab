@@ -75,13 +75,8 @@
   });
 
   exports.Experiment = React.createClass({
-    getInitialState: function () {
-      return {
-        index: null
-      };
-    }
-
-    , propTypes: {
+    /* Interface */
+    propTypes: {
       name: React.PropTypes.string.isRequired
       , children: React.PropTypes.array.isRequired
       , onChoice: React.PropTypes.func.isRequired
@@ -98,66 +93,82 @@
       , clearExperiment: React.PropTypes.func
     }
 
-    , random: function () {
-      return this.props.random || this.context.randomExperiment || random;
+    /* Variables */
+    , _index: -1
+
+    /* Private */
+    , _random: function () {
+      var fn = this.props.random || this.context.randomExperiment || random;
+      return fn();
     }
 
-    , get: function () {
-      return this.props.get || this.context.getExperiment || browserCookie.get;
+    , _defaultFunc: function (name, fn) {
+      return this.props[name] || this.context[name + "Experiment"] || browserCookie[name];
     }
 
-    , set: function () {
-      return this.props.set || this.context.setExperiment || browserCookie.set;
+    , _keyName: function () {
+      return "react_ab_" + this.props.name;
     }
 
-    , clear: function () {
-      return this.props.clear || this.context.clearExperiment || browserCookie.clear;
+    , _get: function () {
+      return this._defaultFunc("get")(this._keyName());
     }
 
+    , _set: function (v) {
+      return this._defaultFunc("set")(this._keyName(), v);
+    }
+
+    , _clear: function () {
+      return this._defaultFunc("clear")(this._keyName());
+    }
+
+    /* Lifecycle */
     , componentWillMount: function () {
-      var variant = this.get()(this.cookieName());
+      var variant = this._get();
 
       for (var i = 0; i < this.props.children.length; i += 1) {
         if (variant === this.props.children[i].props.name) {
-          this.setState({ index: i });
+          this._index = i;
           this.props.onChoice(this.props.name, this.props.children[i].props.name, i, true);
           return ;
         }
       }
 
-      this.chooseVariant();
+      this.chooseVariant(false);
     }
 
-    , chooseVariant: function (fire) {
-      var index = Math.floor(this.random()() * this.props.children.length)
+    /* Methods */
+    , chooseVariant: function (update) {
+      if (typeof update === "undefined") { update = true; }
+
+      var index = Math.floor(this._random() * this.props.children.length)
         , variant = this.props.children[index].props.name;
 
-      this.set()(this.cookieName(), variant);
-
-      this.setState({ index: index });
+      this._set(variant);
+      this._index = index;
       this.props.onChoice(this.props.name, variant, index, false);
+
+      if (update) {
+        this.forceUpdate();
+      }
 
       return index;
     }
 
     , getVariant: function () {
-      var child = this.props.children[this.state.index]
+      var child = this.props.children[this._index]
         , variant = child.props.name;
 
       return variant;
     }
 
-    , cookieName: function () {
-      return "react_ab_" + this.props.name;
-    }
-
     , clearCookie: function () {
-      this.clear()(this.cookieName());
+      this._clear();
     }
 
+    /* Render */
     , render: function () {
-      var child = this.props.children[this.state.index];
-
+      var child = this.props.children[this._index];
       return child;
     }
   });

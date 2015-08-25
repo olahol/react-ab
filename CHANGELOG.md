@@ -1,3 +1,7 @@
+### 0.4.2 (2015-08-25)
+
+* Remove reliance on setState.
+
 ### 0.4.1 (2015-08-25)
 
 * Fix text node bug.
