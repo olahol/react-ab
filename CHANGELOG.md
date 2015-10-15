@@ -1,3 +1,7 @@
+### 0.4.3 (2015-10-16)
+
+* React 0.14.
+
 ### 0.4.2 (2015-08-25)
 
 * Remove reliance on setState.

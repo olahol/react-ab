@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/react-ab.svg)](http://badge.fury.io/js/react-ab)
 [![Build Status](https://travis-ci.org/olahol/react-ab.svg)](https://travis-ci.org/olahol/react-ab)
 [![Coverage Status](https://img.shields.io/coveralls/olahol/react-ab.svg?style=flat)](https://coveralls.io/r/olahol/react-ab)
-[![Dependency Status](https://david-dm.org/olahol/react-ab.svg)](https://david-dm.org/olahol/react-ab)
+[![Dependency Status](https://david-dm.org/olahol/react-ab/peer-status.svg)](https://david-dm.org/olahol/react-ab)
 [![Download Count](https://img.shields.io/npm/dm/react-ab.svg?style=flat)](https://www.npmjs.com/package/react-ab)
 
 > Simple declarative and universal A/B testing component for React.
