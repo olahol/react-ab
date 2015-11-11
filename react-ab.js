@@ -60,7 +60,9 @@
   };
 
   exports.Variant = React.createClass({
-    propTypes: {
+    displayName: "Variant"
+
+    , propTypes: {
       name: React.PropTypes.string.isRequired
       , children: React.PropTypes.node.isRequired
     }
@@ -75,8 +77,10 @@
   });
 
   exports.Experiment = React.createClass({
+    displayName: "Experiment"
+
     /* Interface */
-    propTypes: {
+    , propTypes: {
       name: React.PropTypes.string.isRequired
       , children: React.PropTypes.array.isRequired
       , onChoice: React.PropTypes.func.isRequired

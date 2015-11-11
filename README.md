@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/olahol/react-ab.svg)](https://travis-ci.org/olahol/react-ab)
 [![Coverage Status](https://img.shields.io/coveralls/olahol/react-ab.svg?style=flat)](https://coveralls.io/r/olahol/react-ab)
 [![Dependency Status](https://david-dm.org/olahol/react-ab/peer-status.svg)](https://david-dm.org/olahol/react-ab)
-[![Download Count](https://img.shields.io/npm/dm/react-ab.svg?style=flat)](https://www.npmjs.com/package/react-ab)
+[![Size][size-image]][size-url]
 
 > Simple declarative and universal A/B testing component for React.
 
@@ -243,3 +243,6 @@ the attribute the variant represent like red or large.
 ---
 
 MIT Licensed
+
+[size-image]: https://badge-size.herokuapp.com/olahol/react-ab/master/react-ab.js
+[size-url]: https://github.com/olahol/react-ab/reab-ab.js
