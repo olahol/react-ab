@@ -1,3 +1,7 @@
+### 0.4.5 (2016-03-16)
+
+* Default browser cookies to expire far in the future.
+
 ### 0.4.4 (2015-11-11)
 
 * Add missing `displayName`.
