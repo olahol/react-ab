@@ -1,3 +1,7 @@
+### 0.4.6 (2016-09-08)
+
+* Allow empty variant children.
+
 ### 0.4.5 (2016-03-16)
 
 * Default browser cookies to expire far in the future.

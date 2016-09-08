@@ -164,4 +164,12 @@ describe("Experiment", function () {
 
     assert.ok(ex);
   });
+
+  it("should work with null nodes", function () {
+    var variant1 = React.createElement(Variant, { name: "one" }, null);
+    var variant2 = React.createElement(Variant, { name: "two" }, null);
+    var ex = TestUtils.renderIntoDocument(React.createElement(Experiment, { name: "test", onChoice: function () { }}, variant1, variant2));
+
+    assert.ok(ex);
+  });
 });

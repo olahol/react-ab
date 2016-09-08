@@ -12,6 +12,7 @@
 
   var exports = {};
 
+  /* istanbul ignore next */
   var random = function () {
     try {
       var arr = new Uint16Array(1);
@@ -64,7 +65,7 @@
 
     , propTypes: {
       name: React.PropTypes.string.isRequired
-      , children: React.PropTypes.node.isRequired
+      , children: React.PropTypes.node
     }
 
     , render: function () {
