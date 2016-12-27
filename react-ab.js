@@ -89,6 +89,7 @@
       , get: React.PropTypes.func
       , set: React.PropTypes.func
       , clear: React.PropTypes.func
+      , thisContext: React.PropTypes.object
     }
 
     , contextTypes: {
@@ -104,7 +105,7 @@
     /* Private */
     , _random: function () {
       var fn = this.props.random || this.context.randomExperiment || random;
-      return fn();
+      return fn.call(this.props.thisContext);
     }
 
     , _defaultFunc: function (name, fn) {
@@ -116,15 +117,15 @@
     }
 
     , _get: function () {
-      return this._defaultFunc("get")(this._keyName());
+      return this._defaultFunc("get").call(this.props.thisContext, this._keyName());
     }
 
     , _set: function (v) {
-      return this._defaultFunc("set")(this._keyName(), v);
+      return this._defaultFunc("set").call(this.props.thisContext, this._keyName(), v);
     }
 
     , _clear: function () {
-      return this._defaultFunc("clear")(this._keyName());
+      return this._defaultFunc("clear").call(this.props.thisContext, this._keyName());
     }
 
     /* Lifecycle */

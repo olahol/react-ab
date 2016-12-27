@@ -196,6 +196,12 @@ default uses browser cookies.
 A function that clears/unsets an `experiment`. By
 default uses browser cookies.
 
+##### thisContext
+
+When set, the `this` object in `random`, `get`, `set`, `clear` will be
+the supplied value. This could be useful when the Experiment logic depends
+on props from the parent component.
+
 #### Context
 
 `get, set, clear, random` can also be set from `context`. If these props
