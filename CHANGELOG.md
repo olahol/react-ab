@@ -1,3 +1,7 @@
+### 0.5.0 (2017-09-16)
+
+* Fix deprecation warnings.
+
 ### 0.4.6 (2016-09-08)
 
 * Allow empty variant children.

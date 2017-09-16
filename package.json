@@ -1,6 +1,6 @@
 {
   "name": "react-ab",
-  "version": "0.4.6",
+  "version": "0.5.0",
   "description": "Simple declarative and universal A/B testing component for React.",
   "main": "react-ab.js",
   "peerDependencies": {

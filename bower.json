@@ -3,7 +3,7 @@
   "main": [
     "react-ab.js"
   ],
-  "version": "0.4.6",
+  "version": "0.5.0",
   "homepage": "https://github.com/olahol/react-ab",
   "description": "Simple declarative and universal A/B testing component for React.",
   "keywords": [
@@ -27,6 +27,8 @@
     "example"
   ],
   "dependencies": {
-    "react": ">= 0.13.0"
+    "react": ">= 0.13.0",
+    "create-react-class": "^15.6.0",
+    "prop-types": "^15.5.10"
   }
 }
