@@ -1,13 +1,13 @@
 ;(function (root, factory) {
   /* istanbul ignore next */
   if (typeof module !== "undefined" && module.exports) {
-    module.exports = factory(require("react"));
+    module.exports = factory(require("react"), require("create-react-class"), require("prop-types"));
   } else if (typeof define === "function" && define.amd) {
-    define(["react"], factory);
+    define(["react", "create-react-class", "prop-types"], factory);
   } else {
-    root.ReactAB = factory(root.React);
+    root.ReactAB = factory(root.React, root.React.createClass, root.React.PropTypes);
   }
-})(this, function (React) {
+})(this, function (React, createClass, PropTypes) {
   "use strict";
 
   var exports = {};
@@ -60,12 +60,12 @@
     }
   };
 
-  exports.Variant = React.createClass({
+  exports.Variant = createClass({
     displayName: "Variant"
 
     , propTypes: {
-      name: React.PropTypes.string.isRequired
-      , children: React.PropTypes.node
+      name: PropTypes.string.isRequired
+      , children: PropTypes.node
     }
 
     , render: function () {
@@ -77,25 +77,25 @@
     }
   });
 
-  exports.Experiment = React.createClass({
+  exports.Experiment = createClass({
     displayName: "Experiment"
 
     /* Interface */
     , propTypes: {
-      name: React.PropTypes.string.isRequired
-      , children: React.PropTypes.array.isRequired
-      , onChoice: React.PropTypes.func.isRequired
-      , random: React.PropTypes.func
-      , get: React.PropTypes.func
-      , set: React.PropTypes.func
-      , clear: React.PropTypes.func
+      name: PropTypes.string.isRequired
+      , children: PropTypes.array.isRequired
+      , onChoice: PropTypes.func.isRequired
+      , random: PropTypes.func
+      , get: PropTypes.func
+      , set: PropTypes.func
+      , clear: PropTypes.func
     }
 
     , contextTypes: {
-      randomExperiment: React.PropTypes.func
-      , getExperiment: React.PropTypes.func
-      , setExperiment: React.PropTypes.func
-      , clearExperiment: React.PropTypes.func
+      randomExperiment: PropTypes.func
+      , getExperiment: PropTypes.func
+      , setExperiment: PropTypes.func
+      , clearExperiment: PropTypes.func
     }
 
     /* Variables */
