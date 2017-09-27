@@ -66,6 +66,13 @@
     , propTypes: {
       name: PropTypes.string.isRequired
       , children: PropTypes.node
+      , weight: PropTypes.number
+    }
+
+    , getDefaultProps: function () {
+      return {
+        weight: 1
+      }
     }
 
     , render: function () {
@@ -146,8 +153,26 @@
     , chooseVariant: function (update) {
       if (typeof update === "undefined") { update = true; }
 
-      var index = Math.floor(this._random() * this.props.children.length)
-        , variant = this.props.children[index].props.name;
+      var children = this.props.children
+        , totalWeight = 0
+        , randomWeight = 0
+        , variantWeight = 0
+        , index = 0
+        , variant = undefined;
+
+      for(var i in children) {
+        totalWeight += children[i].props.weight;
+      }
+
+      randomWeight = totalWeight * this._random();
+
+      for (index in children) {
+        variant = children[index].props.name;
+        variantWeight += children[index].props.weight;
+        if (variantWeight >= randomWeight) {
+          break;
+        }
+      }
 
       this._set(variant);
       this._index = index;
